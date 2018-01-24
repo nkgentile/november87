@@ -1,0 +1,7 @@
+@import './reset';
+@import './fonts';
+@import './transitions';
+
+p:not(:first-of-type) {
+  margin-top: 1em;
+}

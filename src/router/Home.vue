@@ -1,23 +1,46 @@
 <template>
   <main>
-    <img :src="background" class="background" width="1909" height="1273" />
+    <gallery-block class="slideshow" :assets="slideshow"/>
     <img :src="logo" class="logo" />
   </main>
 </template>
 
 <script>
-  import background from '@/assets/images/3.jpg';
+  import { isEmpty, pluck } from 'ramda';
   import logo from '@/assets/svg/NOVEMBER87.svg';
 
+  import GalleryBlock from '@/components/GalleryBlock';
+
+  import { createNamespacedHelpers } from 'vuex';
+  const { mapState, mapGetters, mapActions } = createNamespacedHelpers('company');
+
   export default {
+    components: {
+      GalleryBlock
+    },
+
     computed: {
-      background(){
-        return background;
-      },
+      ...mapState([
+        'company'
+      ]),
+
+      ...mapGetters([
+        'slideshow'
+      ]),
 
       logo(){
         return logo;
       }
+    },
+
+    methods: {
+      ...mapActions({
+        fetchSlides: 'fetch'
+      })
+    },
+
+    created(){
+      this.fetchSlides();
     }
   }
 </script>
@@ -38,7 +61,7 @@
     max-width: 60vw;
   }
 
-  .background {
+  .slideshow {
     position: absolute;
     top: 50%;
     left: 50%;

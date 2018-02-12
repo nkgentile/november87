@@ -1,0 +1,27 @@
+[
+    {
+        "src": "./static/1.jpg",
+        "width": "1852",
+        "height": "1309"
+    },
+    {
+        "src": "./static/3.jpg",
+        "width": "1909",
+        "height": "1273"
+    },
+    {
+        "src": "./static/6.jpg",
+        "width": "1684",
+        "height": "1190"
+    },
+    {
+        "src": "./static/immagine.jpg",
+        "width": "922",
+        "height": "1383"
+    },
+    {
+        "src": "./static/12.jpg",
+        "width": "1753",
+        "height": "1161"
+    }
+]

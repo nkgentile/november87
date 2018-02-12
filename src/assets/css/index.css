@@ -2,6 +2,25 @@
 @import './fonts';
 @import './transitions';
 
-p:not(:first-of-type) {
+h1 {
+  text-transform: uppercase;
+}
+
+strong {
+  text-transform: uppercase;
+}
+
+p {
+  text-align: justify;
+}
+
+p:not(:first-child),
+ul:not(:first-child){
   margin-top: 1em;
+}
+
+a,
+a:link,
+a:visited {
+  color: white;
 }

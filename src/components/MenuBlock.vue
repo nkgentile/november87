@@ -1,16 +1,18 @@
 <template>
   <article>
     <figure class="background">
-      <img :src="background" />
+      <cf-image :id="background.id" />
     </figure>
 
     <main>
       <section class="clients">
         <h1>Clients</h1>
         <div>
-          <template v-for="(c, i) in clients">
-            <span>{{ c }}</span><br/>
-          </template>
+          <ul>
+            <template v-for="(c, i) in clients">
+              <li>{{ c.name }}</li>
+            </template>
+          </ul>
         </div>
       </section>
 
@@ -19,36 +21,50 @@
         <div v-html="profile"/>
       </section>
 
-      <section class="connect">
+      <section class="contact">
         <h1>Connect</h1>
-        <div v-html="connect"/>
+        <div v-html="contact"/>
       </section>
     </main>
-
   </article>
 </template>
 
 <script>
-  import background from '@/assets/svg/N87.svg';
-  import { clients, profile, connect } from '@/assets/json/about.json';
+  import { createNamespacedHelpers } from 'vuex';
+  const {
+    mapState,
+    mapGetters,
+    mapActions
+  } = createNamespacedHelpers('company');
+
+  import CfImage from '@/components/CfImage';
 
   export default {
+    components: {
+      CfImage
+    },
+
     computed: {
-      background(){
-        return background;
-      },
+      ...mapGetters([
+        'clients',
+        'background',
+        'contact',
+        'profile'
+      ]),
 
-      clients(){
-        return clients;
-      },
+      ...mapState([
+        'company'
+      ])
+    },
 
-      profile(){
-        return profile;
-      },
+    methods: {
+      ...mapActions({
+        fetchCompany: 'fetch'
+      })
+    },
 
-      connect(){
-        return connect;
-      }
+    created(){
+      this.fetchCompany();
     }
   };
 </script>
@@ -63,27 +79,52 @@
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+
+    position: relative;
   }
 
   main {
-    max-width: 80em;
     display: grid;
-    grid-gap: 5vw;
-    grid-template-columns: repeat(3, minmax(min-content, 1fr));
+    grid-gap: 5em;
+    grid-template-areas:
+      "profile profile"
+      "clients contact"
+    ;
 
-    margin: 5em;
+    box-sizing: border-box;
+    padding: 5em;
+  }
+
+  @media (min-width: 0px) {
+    main {
+      grid-template-areas:
+        "clients profile contact"
+      ;
+      grid-auto-columns: 1fr; 
+    }
   }
 
   .clients {
-    //grid-area: clients;
+    grid-area: clients;
+
+    display: grid;
+    grid-template-columns: 15em;
+    justify-content: right;
   }
 
   .profile {
-    //grid-area: profile;
+    grid-area: profile;
+
+    display: grid;
+    grid-template-columns: 25em;
+    justify-content: center;
   }
 
-  .connect {
-    //grid-area: connect;
+  .contact {
+    grid-area: contact;
+
+    display: grid;
+    grid-template-columns: 25em;
   }
 
   .background {
@@ -95,7 +136,7 @@
 
     display: flex;
     flex-flow: row nowrap;
-    align-content: center;
+    align-items: center;
     justify-content: center;
   }
 
@@ -103,8 +144,8 @@
     object-fit: contain;
     object-position: center;
 
-    min-width: 90%;
-    min-height: 90%;
+    width: 90%;
+    height: 90%;
   }
 
   section {
@@ -114,7 +155,6 @@
   }
 
   h1 {
-    text-transform: uppercase;
     text-align: center;
   }
 </style>

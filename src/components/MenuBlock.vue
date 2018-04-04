@@ -95,12 +95,16 @@
     padding: 5em;
   }
 
-  @media (min-width: 0px) {
+  @media (min-width: 925px) {
     main {
       grid-template-areas:
         "clients profile contact"
       ;
       grid-auto-columns: 1fr; 
+    }
+
+    .clients, .profile, .contact {
+      justify-content: center;
     }
   }
 
